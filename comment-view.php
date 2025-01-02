@@ -4,7 +4,7 @@
 include 'topbar.php';
 include 'sidebar.php';
 
-$users = $pdo->query("SELECT * FROM usertable ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
+$users = $pdo->query("SELECT * FROM comment ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
 
 
 ?>
@@ -12,11 +12,10 @@ $users = $pdo->query("SELECT * FROM usertable ORDER BY id DESC")->fetchAll(PDO::
 
         <div class="content-wrapper">
           <div class="page-header">
-            <h3 class="page-title"> User </h3>
+            <h3 class="page-title"> Comment </h3>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="./user-add.php">Add User</a></li>
-                <li class="breadcrumb-item active" aria-current="page">User</li>
+                <li class="breadcrumb-item active" aria-current="page">Comment</li>
               </ol>
             </nav>
           </div>
@@ -94,8 +93,8 @@ $users = $pdo->query("SELECT * FROM usertable ORDER BY id DESC")->fetchAll(PDO::
   </div>
 
   <script>
-
-showSwal = function (id) {
+    
+    showSwal = function (id) {
   swal({
     title: 'Are you sure?',
     text: 'You are removing an item!',
@@ -120,10 +119,10 @@ showSwal = function (id) {
     if (isConfirmed) {
 
       // Send DELETE request
-      fetch('./api/design.php', {
+      fetch('./delete.php', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: id, key : 'userDelete' }),
+        body: JSON.stringify({ id: id, type : 'item' }),
       })
         .then((response) => {
           console.log('Raw Response:', response);
@@ -149,6 +148,8 @@ showSwal = function (id) {
     }
   });
 };
+
+
 
   </script>
 

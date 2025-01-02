@@ -3,18 +3,24 @@
 include 'topbar.php';
 include 'sidebar.php';
 
+ob_start();
 
+
+$id = $_GET['id'];
+$stmt = $pdo->prepare("SELECT * FROM usertable WHERE id = ?");
+$stmt->execute([$id]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
             <div class="main-panel">
 
                 <div class="content-wrapper">
                     <div class="page-header">
-                        <h3 class="page-title"> Add User </h3>
+                        <h3 class="page-title"> Edit User </h3>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="./user-view.php">View User</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Add User</li>
+                                <li class="breadcrumb-item active" aria-current="page">Edit User</li>
                             </ol>
                         </nav>
                     </div>
@@ -26,14 +32,14 @@ include 'sidebar.php';
         <p id="sample"></p>
         <form id="mainForm" class="form-sample" enctype="multipart/form-data">
     <!-- Add hidden key field -->
-    <input type="hidden" name="key" value="userAdd">
-
+    <input type="hidden" name="key" value="userEdit">
+    <input type="hidden" name="id" value="<?php echo $id; ?>">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Name</label>
                 <div class="col-sm-9">
-                    <input name="name" type="text" class="form-control" required>
+                    <input name="name" type="text" value="<?php echo $user['name']; ?>" class="form-control" required>
                 </div>
             </div>
         </div>
@@ -41,7 +47,7 @@ include 'sidebar.php';
             <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Email</label>
                     <div class="col-sm-9">
-                        <input name="email" type="email" class="form-control" required>
+                        <input name="email" type="email" value="<?php echo $user['email']; ?>" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -51,7 +57,7 @@ include 'sidebar.php';
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Password</label>
                 <div class="col-sm-9">
-                    <input name="password" type="password" class="form-control" required>
+                    <input name="password" type="text" maxlength="12" minlength="6" placeholder="Enter a new password if you want to change it."  class="form-control">
                 </div>
             </div>
         </div>
@@ -59,7 +65,7 @@ include 'sidebar.php';
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Mobile</label>
                 <div class="col-sm-9">
-                    <input name="mobile" type="text" class="form-control">
+                    <input name="mobile" type="text" value="<?php echo $user['mobile']; ?>" class="form-control">
                 </div>
             </div>
         </div>
@@ -69,10 +75,10 @@ include 'sidebar.php';
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Gender</label>
                 <div class="col-sm-9">
-                    <select name="gender" class="form-select">
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
+                    <select name="gender" class="form-select" required>
+                        <option value="male" <?php echo $user['gender'] === 'male' ? 'selected' : ''; ?>>Male</option>
+                        <option value="female" <?php echo $user['gender'] === 'female' ? 'selected' : ''; ?>>Female</option>
+                        <option value="other" <?php echo $user['gender'] === 'other' ? 'selected' : ''; ?>>Other</option>
                     </select>
                 </div>
             </div>
@@ -81,7 +87,7 @@ include 'sidebar.php';
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Address</label>
                 <div class="col-sm-9">
-                    <input name="address" type="text" class="form-control">
+                    <input name="address" type="text" value="<?php echo $user['address']; ?>" class="form-control">
                 </div>
             </div>
         </div>
@@ -91,7 +97,7 @@ include 'sidebar.php';
         <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Country</label>
                 <div class="col-sm-9">
-                    <input name="country" type="text" class="form-control">
+                    <input name="country" type="text" value="<?php echo $user['country']; ?>" class="form-control">
                 </div>
             </div>
         </div>
@@ -99,9 +105,10 @@ include 'sidebar.php';
             <div class="form-group row">
             <label class="col-sm-3 col-form-label">User Role</label>
                 <div class="col-sm-9">
-                    <select name="userRole" class="form-select" requred>
-                        <option>Normal</option>
-                        <option>Admin</option>
+                    
+                <select name="userRole" class="form-select" required>
+                        <option value="normal" <?php echo $user['userRole'] === 'normal' ? 'selected' : ''; ?>>Normal</option>
+                        <option value="admin" <?php echo $user['userRole'] === 'admin' ? 'selected' : ''; ?>>Admin</option>
                     </select>
                 </div>
             </div>
@@ -152,9 +159,7 @@ document.getElementById("mainForm").addEventListener("submit", function(event) {
         })
         .then((data) => {
           if (data.success) {
-            paragraph.innerText = data.message;
-            document.getElementById("mainForm").reset();
-
+            window.location.href = "./user-view.php";
         } else {
             paragraph.innerText = data.message;
         }

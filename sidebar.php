@@ -13,31 +13,36 @@
   </a>
 </li>
 <li class="nav-item menu-items">
-  <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+  <a class="nav-link" data-bs-toggle="collapse" href="#uiu-basic" aria-expanded="false" aria-controls="uiu-basic">
     <span class="menu-icon">
       <i class="mdi mdi-laptop"></i>
     </span>
-    <span class="menu-title">Designs</span>
+    <span class="menu-title">Design</span>
     <i class="menu-arrow"></i>
   </a>
-  <div class="collapse" id="ui-basic">
+  <div class="collapse" id="uiu-basic">
     <ul class="nav flex-column sub-menu">
       <li class="nav-item"> <a class="nav-link" href="./design-view.php">View Design</a></li>
       <li class="nav-item"> <a class="nav-link" href="./design-add.php">Add Design</a></li>
     </ul>
   </div>
-</li>
-<li class="nav-item menu-items">
-  <a class="nav-link" href="./user-view.php">
+</li><li class="nav-item menu-items">
+  <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
     <span class="menu-icon">
-      <i class="mdi mdi-playlist-play"></i>
+      <i class="mdi mdi-contacts"></i>
     </span>
     <span class="menu-title">User</span>
     <i class="menu-arrow"></i>
   </a>
+  <div class="collapse" id="ui-basic">
+    <ul class="nav flex-column sub-menu">
+      <li class="nav-item"> <a class="nav-link" href="./user-view.php">View User</a></li>
+      <li class="nav-item"> <a class="nav-link" href="./user-add.php">Add User</a></li>
+    </ul>
+  </div>
 </li>
 <li class="nav-item menu-items">
-  <a class="nav-link" href="../../pages/tables/basic-table.html">
+  <a class="nav-link" href="./comment-view.php">
     <span class="menu-icon">
       <i class="mdi mdi-table-large"></i>
     </span>
@@ -84,7 +89,7 @@
       </a>
       <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="profileDropdown">
        
-        <a class="dropdown-item preview-item">
+        <a class="dropdown-item preview-item" href="user-edit.php?id=<?php echo $_SESSION['id']; ?>">
           <div class="preview-thumbnail">
             <div class="preview-icon bg-dark rounded-circle">
               <i class="mdi mdi-cog text-success"></i>
